@@ -13,6 +13,7 @@ const schema = Joi.object({
   title: Joi.string().required(),
   icon: Joi.string().required(),
   roles: Joi.array().items(Joi.string()),
+  accent_color: Joi.string().optional(),
   config: Joi.object().unknown(true)
 });
 

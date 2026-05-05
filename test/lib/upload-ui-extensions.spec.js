@@ -18,6 +18,7 @@ describe('Upload UI Extensions Library', () => {
     type: 'app_main_tab',
     title: 'My Extension',
     icon: 'star',
+    accent_color: 'red',
     roles: ['admin'],
     config: { foo: 'bar' }
   };
