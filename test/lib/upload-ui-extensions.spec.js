@@ -17,7 +17,7 @@ describe('Upload UI Extensions Library', () => {
   const validProps = {
     type: 'app_main_tab',
     title: 'My Extension',
-    icon: 'star',
+    icon: 'fa-star',
     accent_color: 'red',
     roles: ['admin'],
     config: { foo: 'bar' }
@@ -104,11 +104,12 @@ describe('Upload UI Extensions Library', () => {
   });
 
   [
-    { type: 'app_main_tab', title: 'My Extension' },
-    { type: 'app_main_tab', icon: 'my-icon' },
-    { title: 'My Extension', icon: 'my-icon' },
-    { type: 'app_main_tab', title: 'My Extension', icon: 'my-icon', roles: 'my-role' },
-    { type: 'app_main_tab', title: 'My Extension', icon: 'my-icon', roles: ['my-role'], config: 'my-config' },
+    { type: 'app_main_tab' },
+    { title: 'My Extension' },
+    { type: 'app_main_tab', title: 'My Extension', roles: 'my-role' },
+    { type: 'app_main_tab', title: 'My Extension', roles: ['my-role'], config: 'my-config' },
+    { ...validProps, resource_icon: 'icon.png' },
+    { ...validProps, icon: 'icon' }
   ].forEach(invalidProps => {
     it('throws an exception if properties.json fails Joi schema validation', async () => {
       fs.readdirSync.returns(['valid-name.js', 'valid-name.properties.json']);
@@ -131,12 +132,7 @@ describe('Upload UI Extensions Library', () => {
     expect(warnUploadOverwrite.preUploadDoc.callCount).to.equal(1);
     expect(insertOrReplace.callCount).to.equal(1);
     expect(insertOrReplace.args[0][0]).to.equal(db);
-    expect(insertOrReplace.args[0][1]).to.deep.include({
-      _id: 'ui-extension:valid-name',
-      type: 'app_main_tab',
-      title: 'My Extension',
-      icon: 'star',
-    });
+    expect(insertOrReplace.args[0][1]).to.deep.include(validProps);
     expect(insertOrReplace.args[0][1]._attachments).to.have.property('extension.js');
     expect(attachmentFromFile.calledOnce).to.be.true;
     expect(warnUploadOverwrite.postUploadDoc.callCount).to.equal(1);

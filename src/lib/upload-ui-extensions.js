@@ -11,11 +11,12 @@ const attachmentFromFile = require('./attachment-from-file');
 const schema = Joi.object({
   type: Joi.string().valid('app_main_tab', 'app_drawer_tab').required(),
   title: Joi.string().required(),
-  icon: Joi.string().required(),
+  icon: Joi.string().pattern(/^fa-/).optional(),
+  resource_icon: Joi.string().optional(),
   roles: Joi.array().items(Joi.string()),
   accent_color: Joi.string().optional(),
   config: Joi.object().unknown(true)
-});
+}).oxor('icon', 'resource_icon');
 
 //validates the name against custom web component standards
 const validateExtensionName = (name) => {
