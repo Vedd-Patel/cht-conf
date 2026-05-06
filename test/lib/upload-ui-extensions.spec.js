@@ -67,8 +67,7 @@ describe('Upload UI Extensions Library', () => {
   });
 
   [
-    'myExtension',
-    'myextension',
+    'my extension',
     'my$ext',
   ].forEach(invalidName => {
     it('throws an exception when the extension name is invalid', async () => {

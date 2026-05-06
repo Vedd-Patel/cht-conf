@@ -18,14 +18,8 @@ const schema = Joi.object({
   config: Joi.object().unknown(true)
 }).oxor('icon', 'resource_icon');
 
-//validates the name against custom web component standards
-const validateExtensionName = (name) => {
-  const startsWithLowercase = /^[a-z]/.test(name);
-  const hasHyphen = name.includes('-');
-  const hasValidChars = /^[a-z0-9_.-]+$/.test(name);
-
-  return startsWithLowercase && hasHyphen && hasValidChars;
-};
+// Name will be used in Couch _id and in web component name.
+const validateExtensionName = (name) => /^[a-zA-Z0-9_.-]+$/.test(name);
 
 const getNamesToUpload = (uiExtensionsDir) => {
   const allFiles = fs.readdirSync(uiExtensionsDir);
