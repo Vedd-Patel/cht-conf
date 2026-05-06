@@ -2,22 +2,26 @@ const environment = require('./environment');
 const pouch = require('./db');
 const log = require('./log');
 
-const getDocsToDelete = async (db, specificExtensions) => {
-  if (specificExtensions && specificExtensions.length > 0) {
-    const docs = [];
-    for (const name of specificExtensions) {
-      try {
-        const doc = await db.get(`ui-extension:${name}`);
-        docs.push(doc);
-      } catch (err) {
-        if (err.status === 404) {
-          log.warn(`UI Extension "${name}" not found in database. Skipping.`);
-        } else {
-          throw new Error(`Failed to fetch extension "${name}": ${err.message}`);
-        }
+const getSpecificDocs = async (db, specificExtensions) => {
+  const docs = [];
+  for (const name of specificExtensions) {
+    try {
+      const doc = await db.get(`ui-extension:${name}`);
+      docs.push(doc);
+    } catch (err) {
+      if (err.status === 404) {
+        log.warn(`UI Extension "${name}" not found in database. Skipping.`);
+      } else {
+        throw new Error(`Failed to fetch extension "${name}": ${err.message}`);
       }
     }
-    return docs;
+  }
+  return docs;
+};
+
+const getDocsToDelete = async (db, specificExtensions) => {
+  if (specificExtensions && specificExtensions.length > 0) {
+    return getSpecificDocs(db, specificExtensions);
   }
 
   log.info('No specific extensions provided. Fetching all UI extensions...');
