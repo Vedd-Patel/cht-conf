@@ -2,18 +2,24 @@ const environment = require('./environment');
 const pouch = require('./db');
 const log = require('./log');
 
+const fetchSingleDoc = async (db, name) => {
+  try {
+    return await db.get(`ui-extension:${name}`);
+  } catch (err) {
+    if (err.status === 404) {
+      log.warn(`UI Extension "${name}" not found in database. Skipping.`);
+      return null;
+    }
+    throw new Error(`Failed to fetch extension "${name}": ${err.message}`);
+  }
+};
+
 const getSpecificDocs = async (db, specificExtensions) => {
   const docs = [];
   for (const name of specificExtensions) {
-    try {
-      const doc = await db.get(`ui-extension:${name}`);
+    const doc = await fetchSingleDoc(db, name);
+    if (doc) {
       docs.push(doc);
-    } catch (err) {
-      if (err.status === 404) {
-        log.warn(`UI Extension "${name}" not found in database. Skipping.`);
-      } else {
-        throw new Error(`Failed to fetch extension "${name}": ${err.message}`);
-      }
     }
   }
   return docs;
