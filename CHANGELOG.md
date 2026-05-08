@@ -1,3 +1,10 @@
+# [6.4.0](https://github.com/medic/cht-conf/compare/v6.3.0...v6.4.0) (2026-05-08)
+
+
+### Features
+
+* **#771:** deprecate NO_LABEL usage in forms ([#813](https://github.com/medic/cht-conf/issues/813)) ([197202a](https://github.com/medic/cht-conf/commit/197202a11d0bb6003606efa1b5cf6b79e56bc44c)), closes [#771](https://github.com/medic/cht-conf/issues/771)
+
 # [6.3.0](https://github.com/medic/cht-conf/compare/v6.2.0...v6.3.0) (2026-04-27)
 
 
