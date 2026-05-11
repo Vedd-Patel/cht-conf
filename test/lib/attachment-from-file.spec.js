@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const path = require('node:path');
+const path = require('path');
 const attachmentFromFile = require('./../../src/lib/attachment-from-file');
 
 const BASE_DIR = path.join(__dirname, '../data/attachment-from-file');

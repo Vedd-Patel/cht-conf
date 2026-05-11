@@ -1,4 +1,4 @@
-const deleteUiExtensionsLib = require('../lib/delete-ui-extensions');
+const uiExtensionsLib = require('../lib/ui-extensions');
 const environment = require('../lib/environment');
 
 const executeDeleteUiExtensions = async () => {
@@ -8,7 +8,10 @@ const executeDeleteUiExtensions = async () => {
     specificExtensions = environment.extraArgs.filter(arg => !arg.startsWith('--'));
   }
 
-  await deleteUiExtensionsLib.run(specificExtensions);
+  await uiExtensionsLib.deleteUiExtensions(specificExtensions);
 };
 
-module.exports = executeDeleteUiExtensions;
+module.exports = {
+  requiresInstance: true,
+  execute: executeDeleteUiExtensions
+};

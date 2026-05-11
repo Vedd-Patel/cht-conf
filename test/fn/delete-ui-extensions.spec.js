@@ -1,38 +1,41 @@
-const chai = require('chai');
+const { expect } = require('chai');
 const sinon = require('sinon');
-const rewire = require('rewire');
 
-const expect = chai.expect;
+const environment = require('../../src/lib/environment');
+const uiExtensionsLib = require('../../src/lib/ui-extensions');
+const deleteUiExtensions = require('../../src/fn/delete-ui-extensions');
 
-describe('Delete UI Extensions FN Wrapper', () => {
-  let executeDeleteUiExtensions;
-  let runStub;
-  let environmentMock;
+describe('Upload UI Extensions', () => {
+  let deleteUiExtensionsStub;
 
   beforeEach(() => {
-    executeDeleteUiExtensions = rewire('../../src/fn/delete-ui-extensions');
-
-    runStub = sinon.stub().resolves();
-    executeDeleteUiExtensions.__set__('deleteUiExtensionsLib', { run: runStub });
-
-    environmentMock = { extraArgs: [] };
-    executeDeleteUiExtensions.__set__('environment', environmentMock);
+    deleteUiExtensionsStub = sinon.stub(uiExtensionsLib, 'deleteUiExtensions').resolves();
   });
 
-  afterEach(() => {
-    sinon.restore();
+  afterEach(() => sinon.restore());
+
+  it('calls uploadUiExtensions with the ui-extensions directory and no specific extensions', async () => {
+    sinon.stub(environment, 'extraArgs').get(() => undefined);
+
+    await deleteUiExtensions.execute();
+    expect(deleteUiExtensions.requiresInstance).to.equal(true);
+
+    expect(deleteUiExtensionsStub).to.have.been.calledOnceWithExactly([]);
   });
 
-  it('should call lib run with an empty array if no extra args are provided', async () => {
-    await executeDeleteUiExtensions();
-    expect(runStub.calledOnceWithExactly([])).to.be.true;
+  it('should pass specific extensions from extraArgs, filtering out flags', async () => {
+    sinon.stub(environment, 'extraArgs').get(() => ['--', 'my-extension', '--force', 'other-extension']);
+
+    await deleteUiExtensions.execute();
+
+    expect(deleteUiExtensionsStub).to.have.been.calledOnceWithExactly(['my-extension', 'other-extension']);
   });
 
-  it('should filter out -- flags and pass specific extensions to lib run', async () => {
-    environmentMock.extraArgs = ['extension-one', '--url=http://localhost', 'extension-two'];
+  it('should pass an empty array when extraArgs contains only flags', async () => {
+    sinon.stub(environment, 'extraArgs').get(() => ['--', '--force', '--debug']);
 
-    await executeDeleteUiExtensions();
+    await deleteUiExtensions.execute();
 
-    expect(runStub.calledOnceWithExactly(['extension-one', 'extension-two'])).to.be.true;
+    expect(deleteUiExtensionsStub).to.have.been.calledOnceWithExactly([]);
   });
 });
