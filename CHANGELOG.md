@@ -1,3 +1,17 @@
+# [6.4.0](https://github.com/medic/cht-conf/compare/v6.3.0...v6.4.0) (2026-05-08)
+
+
+### Features
+
+* **#771:** deprecate NO_LABEL usage in forms ([#813](https://github.com/medic/cht-conf/issues/813)) ([197202a](https://github.com/medic/cht-conf/commit/197202a11d0bb6003606efa1b5cf6b79e56bc44c)), closes [#771](https://github.com/medic/cht-conf/issues/771)
+
+# [6.3.0](https://github.com/medic/cht-conf/compare/v6.2.0...v6.3.0) (2026-04-27)
+
+
+### Features
+
+* **#10766:** support `collapsed` in contact summary card ([#812](https://github.com/medic/cht-conf/issues/812)) ([8b3f34a](https://github.com/medic/cht-conf/commit/8b3f34a3b58ffbd2c58c0e28f15dbc87e6d1e572)), closes [#10766](https://github.com/medic/cht-conf/issues/10766)
+
 # [6.2.0](https://github.com/medic/cht-conf/compare/v6.1.1...v6.2.0) (2026-04-18)
 
 
