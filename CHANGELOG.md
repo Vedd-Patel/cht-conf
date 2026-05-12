@@ -1,3 +1,10 @@
+## [6.4.1](https://github.com/medic/cht-conf/compare/v6.4.0...v6.4.1) (2026-05-12)
+
+
+### Bug Fixes
+
+* **#769:** consider local-ip hosts as local ([#806](https://github.com/medic/cht-conf/issues/806)) ([79c0020](https://github.com/medic/cht-conf/commit/79c0020c885f416fb305ed53ab320c1f909b8095)), closes [#769](https://github.com/medic/cht-conf/issues/769) [#769](https://github.com/medic/cht-conf/issues/769)
+
 # [6.4.0](https://github.com/medic/cht-conf/compare/v6.3.0...v6.4.0) (2026-05-08)
 
 
